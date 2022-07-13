@@ -1,0 +1,11 @@
+postgres:
+  container_name: postgres-sale
+  restart: always
+  image: postgres:latest
+  environment:
+    - POSTGRES_DB=sale-database
+    - POSTGRES_PASSWORD=123456
+  volumes:
+    - ./webapp-database:/var/lib/postgres
+  ports:
+    - 5432:5432

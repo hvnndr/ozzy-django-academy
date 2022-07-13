@@ -1,3 +1,8 @@
 {
     "python.terminal.activateEnvironment": true,
+    "workbench.colorTheme": "Min Dark",
+    "window.zoomLevel": 1,
+    "editor.fontWeight": "bold",
+    "explorer.confirmDragAndDrop": false,
+    "files.autoSave": "afterDelay"
 }

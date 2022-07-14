@@ -9,12 +9,18 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
-from pathlib import Path
+import os
+from os import path
+from os.path import join, exists
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ozzy_conf = os.path.join(BASE_DIR, 'ozzy.conf')
+
+if exists(ozzy_conf):
+    load_dotenv(ozzy_conf)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -37,7 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'basic.apps.BasicConfig'
+    'basic.apps.BasicConfig',
 ]
 
 MIDDLEWARE = [
@@ -74,13 +80,24 @@ WSGI_APPLICATION = 'sale.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+ENGINE = os.environ.get('DB_ENGINE')
+NAME = os.environ.get('DB_NAME')
+HOST = os.environ.get('DB_HOST')
+PORT = os.environ.get('DB_PORT')
+USER = os.environ.get('DB_USER')
+PASSWORD = os.environ.get('DB_PASS')
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': ENGINE,
+        'NAME': NAME,
+        'HOST': HOST,
+        'PORT': PORT,
+        'USER': USER,
+        'PASSWORD': PASSWORD
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators

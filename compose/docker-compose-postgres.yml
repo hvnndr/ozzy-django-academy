@@ -1,11 +1,37 @@
-postgres:
-  container_name: postgres-sale
-  restart: always
-  image: postgres:latest
-  environment:
-    - POSTGRES_DB=sale-database
-    - POSTGRES_PASSWORD=123456
-  volumes:
-    - ./webapp-database:/var/lib/postgres
-  ports:
-    - 5432:5432
+version: '3'
+
+services:
+  postgres:
+    container_name: postgres-ozzy
+    restart: always
+    image: postgres:latest
+    environment:
+      - POSTGRES_DB=ozzy-database
+      - POSTGRES_PASSWORD=123456
+    volumes:
+      - ozzy-django:/var/lib/postgres
+    ports:
+      - 5432:5432
+    networks:
+      - ozzy-network
+
+  pgadmin4:
+    container_name: pgadmin4-ozzy
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "admin@admin.com"
+      PGADMIN_DEFAULT_PASSWORD: "123456"
+    ports:
+      - "51:80"
+    volumes:
+      - ozzy-django:/var/lib/postgres
+    networks:
+      - ozzy-network
+
+volumes:
+  ozzy-django:
+
+networks:
+  ozzy-network:
+    driver: bridge

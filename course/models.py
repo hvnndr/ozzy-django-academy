@@ -18,3 +18,17 @@ class Course(ModelBase):
         db_table = 'course'
         managed = True
 
+class Student(ModelBase):
+    name = models.CharField(max_length=128, null=False)
+    course = models.ForeignKey(
+        to = Course,
+        on_delete=models.CASCADE,
+        null=False,
+        related_name='students',
+        db_column='id_course'
+    )
+
+    class Meta:
+        db_table = 'student'
+        managed = True
+

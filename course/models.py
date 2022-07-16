@@ -8,6 +8,11 @@ class ModelBase(models.Model):
     modified_at = models.DateTimeField(auto_now=True)
     active = models.BooleanField(default=True, null=False)
 
+    def __str__(self) -> str:
+        return self.name
+
+        #para não retornar <object NxNN> e sim o nome, caso exista
+
     class Meta:
         abstract = True
 

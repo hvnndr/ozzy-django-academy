@@ -1,3 +1,4 @@
+from itertools import product
 from statistics import mode
 from django.db import models
 
@@ -68,4 +69,23 @@ class ProductGroup(ModelBase):
         db_table = 'product_group'
         managed = True
 
+class Product(ModelBase):
+    name = models.CharField(max_length=64, null=False)
+    cost_price = models.DecimalField(max_digits=16, decimal_places=2, null=False)
+    sale_price = models.DecimalField(max_digits=16, decimal_places=2, null=False)
+    product_group = models.ForeignKey(
+        to = 'ProductGroup',
+        on_delete = models.DO_NOTHING,
+        db_column = 'id_product_group',
+        null = False
+    )
+    supplier = models.ForeignKey(
+        to = 'Supplier',
+        db_column='id_supplier',
+        on_delete=models.DO_NOTHING,
+        null = False
+    )
+    class Meta:
+        db_table = 'product'
+        managed = True
 

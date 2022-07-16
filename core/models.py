@@ -22,3 +22,11 @@ class Department(ModelBase):
     class Meta:
         db_table = 'department'
         managed = True
+
+
+class MaritalStatus(ModelBase):
+    name = models.CharField(max_length=64, null=False, unique=True)
+
+    class Meta:
+        db_table = 'marital_status'
+        managed = True

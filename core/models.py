@@ -30,3 +30,42 @@ class MaritalStatus(ModelBase):
     class Meta:
         db_table = 'marital_status'
         managed = True
+
+
+class Zone(ModelBase):
+    name = models.CharField(max_length=64, null=False, unique=True)
+
+    class Meta:
+        db_table = 'Zone'
+        managed = True
+
+
+class State(ModelBase):
+    name = models.CharField(max_length=64, null=False, unique=True)
+    abbreviation = models.CharField(max_length=2, null=False)
+
+    class Meta:
+        db_table = 'state'
+        managed = True
+
+
+class Supplier(ModelBase):
+    name = models.CharField(max_length=64, null=False)
+    legal_document = models.CharField(max_length=20, null=False, unique=True)
+
+    class Meta:
+        db_table = 'supplier'
+        managed = True
+
+
+class ProductGroup(ModelBase):
+    name = models.CharField(max_length=64, null=False)
+    commission_percentage = models.DecimalField(max_digits=6, decimal_places=2)
+    gain_percentage = models.DecimalField(max_digits=6, decimal_places=2)
+
+
+    class Meta:
+        db_table = 'product_group'
+        managed = True
+
+

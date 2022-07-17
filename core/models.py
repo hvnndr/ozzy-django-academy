@@ -120,3 +120,37 @@ class District(ModelBase):
     class Meta:
         db_table = 'district'
         managed = True
+
+
+class Employee(ModelBase):
+    class Gender(models.TextChoices):
+        MALE = ('M', 'Male')
+        FEMALE = ('F', 'Female')
+
+    name = models.CharField(max_length=64, null=False)
+    salary = models.DecimalField(max_digits=16, decimal_places=2, null=False)
+    gender = models.CharField(max_length=1, null=False, choices=Gender.choices)
+    admission_date = models.DateField(null=False)
+    birth_date = models.DateField(null=False)
+    district = models.ForeignKey(
+        to = 'District',
+        on_delete=models.DO_NOTHING,
+        null = False,
+        db_column='id_district'
+    )
+    department = models.ForeignKey(
+        to = 'Department',
+        on_delete=models.DO_NOTHING,
+        null = False,
+        db_column='id_district'
+    )
+    marital_status = models.ForeignKey(
+        to = 'MaritalStatus',
+        db_column='id_marital_status',
+        on_delete=models.DO_NOTHING,
+        null=False
+    )
+
+    class Meta:
+        db_table = 'employee'
+        managed = True

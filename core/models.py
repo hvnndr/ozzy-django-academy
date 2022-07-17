@@ -1,5 +1,4 @@
 from itertools import product
-from statistics import mode
 from django.db import models
 
 # Create your models here.
@@ -15,6 +14,10 @@ class ModelBase(models.Model):
 
     class Meta:
         abstract = True
+
+    class Gender(models.TextChoices):
+        MALE = ('M', 'Male')
+        FEMALE = ('F', 'Female')
 
 
 class Department(ModelBase):
@@ -123,13 +126,9 @@ class District(ModelBase):
 
 
 class Employee(ModelBase):
-    class Gender(models.TextChoices):
-        MALE = ('M', 'Male')
-        FEMALE = ('F', 'Female')
-
     name = models.CharField(max_length=64, null=False)
     salary = models.DecimalField(max_digits=16, decimal_places=2, null=False)
-    gender = models.CharField(max_length=1, null=False, choices=Gender.choices)
+    gender = models.CharField(max_length=1, null=False, choices=ModelBase.Gender.choices)
     admission_date = models.DateField(null=False)
     birth_date = models.DateField(null=False)
     district = models.ForeignKey(
@@ -154,3 +153,40 @@ class Employee(ModelBase):
     class Meta:
         db_table = 'employee'
         managed = True
+
+
+class Branch(ModelBase):
+    name = models.CharField(max_length=64, null=False, unique=True)
+    district = models.ForeignKey(
+        to = 'District',
+        db_column='id_district',
+        on_delete=models.DO_NOTHING,
+        null=False
+    )
+
+    class Meta:
+        db_table = 'branch'
+        managed = True
+
+
+class Customer(ModelBase):
+    name = models.CharField(max_length=64, null=False)
+    income = models.DecimalField(max_digits=16, decimal_places=2, null=False)
+    gender = models.CharField(max_length=1, null=False, choices=ModelBase.Gender.choices)
+    district = models.ForeignKey(
+        to = 'District',
+        db_column='id_district',
+        on_delete=models.DO_NOTHING,
+        null=False
+    )
+    marital_status = models.ForeignKey(
+        to='MaritalStatus',
+        on_delete=models.DO_NOTHING,
+        db_column='id_marital_status',
+        null=False
+    )
+
+    class Meta:
+        db_table = 'customer'
+        managed = True
+

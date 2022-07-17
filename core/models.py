@@ -89,3 +89,34 @@ class Product(ModelBase):
         db_table = 'product'
         managed = True
 
+
+class City(ModelBase):
+    name = models.CharField(max_length=64, null=False)
+    state = models.ForeignKey(
+        to = 'State',
+        on_delete=models.DO_NOTHING,
+        db_column='id_state',
+        null=False
+    )
+    class Meta:
+        db_table = 'city'
+        managed = True
+
+class District(ModelBase):
+    name = models.CharField(max_length=64, null=False)
+    city = models.ForeignKey(
+        to = 'City',
+        db_column='id_city',
+        null=False,
+        on_delete=models.DO_NOTHING
+    )
+    zone = models.ForeignKey(
+        to = 'Zone',
+        db_column='id_zone',
+        null=False,
+        on_delete=models.DO_NOTHING
+    )
+
+    class Meta:
+        db_table = 'district'
+        managed = True

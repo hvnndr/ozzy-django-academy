@@ -40,7 +40,7 @@ class Zone(ModelBase):
     name = models.CharField(max_length=64, null=False, unique=True)
 
     class Meta:
-        db_table = 'Zone'
+        db_table = 'zone'
         managed = True
 
 

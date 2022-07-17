@@ -141,7 +141,7 @@ class Employee(ModelBase):
         to = 'Department',
         on_delete=models.DO_NOTHING,
         null = False,
-        db_column='id_district'
+        db_column='id_department'
     )
     marital_status = models.ForeignKey(
         to = 'MaritalStatus',
@@ -190,3 +190,48 @@ class Customer(ModelBase):
         db_table = 'customer'
         managed = True
 
+
+class Sale(ModelBase):
+    date = models.DateTimeField(auto_now_add=True, null=False)
+    costumer = models.ForeignKey(
+        to = 'Customer',
+        on_delete=models.DO_NOTHING,
+        null=False,
+        db_column='id_customer'
+    )
+    employee = models.ForeignKey(
+        to = 'Employee',
+        on_delete=models.DO_NOTHING,
+        null=False,
+        db_column='id_employee'
+    )
+    branch = models.ForeignKey(
+        to = 'Branch',
+        on_delete=models.DO_NOTHING,
+        null=False,
+        db_column='id_branch'
+    )
+
+    class Meta:
+        db_table = 'sale'
+        managed = True
+
+
+class SaleItem(ModelBase):
+    quantity = models.DecimalField(max_digits=16, decimal_places=3)
+    sale = models.ForeignKey(
+        to = 'Sale',
+        db_column='id_sale',
+        on_delete=models.DO_NOTHING,
+        null=False
+    )
+    product = models.ForeignKey(
+        to = 'Product',
+        db_column='id_product',
+        on_delete=models.DO_NOTHING,
+        null=False
+    )
+
+    class Meta:
+        db_table = 'sale_item'
+        managed = True

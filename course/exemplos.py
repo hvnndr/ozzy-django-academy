@@ -37,3 +37,16 @@ def associa_todos_cursos_a_todos_alunos():
             cs.course = c
             cs.save()
     
+def consulta_students_by_course():
+    course = models.Course.objects.first()
+    list = course.students.all()
+    print(list)    
+    for l in list:
+        print(l)
+
+def consulta_course_by_students():
+    student = models.Student.objects.first()
+    list = student.courses.all()
+    print(list)
+    for l in list:
+        print(l)

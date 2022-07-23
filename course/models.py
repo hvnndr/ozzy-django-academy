@@ -18,6 +18,10 @@ class ModelBase(models.Model):
 
 class Course(ModelBase):
     name = models.CharField(max_length=40, null=False)
+    students = models.ManyToManyField(
+        to='Student',
+        through='StudentCourse'
+    )
 
     class Meta:
         db_table = 'course'
@@ -25,6 +29,10 @@ class Course(ModelBase):
 
 class Student(ModelBase):
     name = models.CharField(max_length=128, null=False)
+    courses = models.ManyToManyField(
+        to='Course',
+        through='StudentCourse'
+    )
 
     class Meta:
         db_table = 'student'

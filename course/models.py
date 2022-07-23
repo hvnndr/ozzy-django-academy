@@ -25,15 +25,26 @@ class Course(ModelBase):
 
 class Student(ModelBase):
     name = models.CharField(max_length=128, null=False)
-    course = models.ForeignKey(
-        to = Course,
-        on_delete=models.CASCADE,
-        null=False,
-        related_name='students',
-        db_column='id_course'
-    )
 
     class Meta:
         db_table = 'student'
         managed = True
 
+class StudentCourse(ModelBase):
+    student = models.ForeignKey(
+        to='Student',
+        on_delete=models.DO_NOTHING,
+        null=False,
+        db_column='id_student'
+    )
+    course = models.ForeignKey(
+        to='Course',
+        on_delete=models.DO_NOTHING,
+        null=False,
+        db_column='id_course'
+    )
+
+    class Meta:
+        db_table = 'student_course'
+        managed = True
+        unique_together = [('student', 'course')]

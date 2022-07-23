@@ -50,3 +50,10 @@ def consulta_course_by_students():
     print(list)
     for l in list:
         print(l)
+
+def cadastrando_curso_em_aluno(curso):
+    # Criando método
+    c = models.Course.objects.create(name=curso)
+    aluno = models.Student.objects.first()
+
+    aluno.courses.add(c)
